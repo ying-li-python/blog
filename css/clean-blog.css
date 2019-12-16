@@ -46,7 +46,7 @@ blockquote {
 }
 
 .section-heading {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 700;
   margin-top: 60px;
   color: #5b68af;
@@ -451,4 +451,8 @@ button[disabled]{
 
 .p-footer {
   color: #d0dbe6;
+}
+
+ul li {
+  font-size: 1.15rem;
 }
