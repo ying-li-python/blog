@@ -290,8 +290,10 @@ header.masthead .post-heading .meta a {
 
 .post-preview > .post-meta {
   font-size: 18px;
+  font-family: Lora;
   font-style: italic;
   margin-top: 0;
+  margin-bottom: 5px;
   color: #868e96;
 }
 
@@ -388,27 +390,25 @@ footer .copyright {
 .btn {
   font-size: 14px;
   font-weight: 800;
-  padding: 15px 25px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  border-radius: 0;
+  border-radius: 5px;
   font-family: 'Work Sans';
 }
 
 .btn-primary {
-  background-color: #5b68af;
-  border-color: #5b68af;
+  background-color: #4c9fff;
+  border-color: #4c9fff;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
   color: #fff;
-  background-color: #00657b !important;
-  border-color: #00657b !important;
+  background-color: #84beff !important;
+  border-color: #84beff !important;
 }
 
 .btn-lg {
   font-size: 16px;
-  padding: 25px 35px;
 }
 
 .navbar-toggler {
@@ -437,4 +437,12 @@ footer .copyright {
   box-sizing: content-box;
   border: 1px solid transparent;
   margin: -1px;
+}
+button:disabled,
+button[disabled]{
+  border: 1px solid #0F7173;
+  background-color:#0F7173;
+  color: #0F7173;
+  font-weight: 600;
+  padding: 2px 10px;
 }
