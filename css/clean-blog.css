@@ -19,6 +19,7 @@ p {
 
 p a {
   text-decoration: underline;
+  font-weight: 600;
 }
 
 h1,
@@ -451,8 +452,22 @@ button[disabled]{
 
 .p-footer {
   color: #d0dbe6;
+  font-size: 16px;
 }
 
 ul li {
   font-size: 1.15rem;
+}
+
+.fab, .fas{
+  color: #fff;
+  font-size:30px;
+  -webkit-transition: color 0.2s ease;
+  -moz-transition: color 0.2s ease;
+  -o-transition: color 0.2s ease;
+  transition: color 0.2s ease;
+}
+  
+.fab:hover, .fas:hover {
+  color: #4c9fff;
 }
