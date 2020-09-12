@@ -220,12 +220,31 @@
         
         <p>Open your terminal and let's create a directory (folder) called citation-generator. Go into the directory.</p>
 
-        <pre class="prettyprint lang-bsh">$ mkdir citation-generator 
+        <div class="window-container">
+          <div class="window-top">
+              <span class="dot" style="background:#ED594A;"></span>
+              <span class="dot" style="background:#FDD800;"></span>
+              <span class="dot" style="background:#5AC05A;"></span>
+          </div>
+          <div class="window-content">
+            <pre class="prettyprint lang-bsh">$ mkdir citation-generator 
 $ cd citation-generater</pre>
+          </div>
+        </div>
 
         <p>Create a new file called <code>main.py</code> and open the file with the code editor (the open command will open the file using your default editor).</p>
-        <pre class="prettyprint lang-bsh">$ touch main.py  
+
+        <div class="window-container">
+          <div class="window-top">
+              <span class="dot" style="background:#ED594A;"></span>
+              <span class="dot" style="background:#FDD800;"></span>
+              <span class="dot" style="background:#5AC05A;"></span>
+          </div>
+          <div class="window-content">
+            <pre class="prettyprint lang-bsh">$ touch main.py  
 $ open main.py</pre>
+          </div>
+        </div>
 
         <p>In the code editor with <code>main.py</code> opened, it is convention to <a id="p-link" href="https://www.geeksforgeeks.org/python-modules/" target="_blank">import all modules or dependences</a> that the script needs to run.</p> 
         
@@ -235,7 +254,15 @@ $ open main.py</pre>
 
         <p>NCBI's databases are openly available using their "base url", as <a id="p-link" href="https://www.ncbi.nlm.nih.gov/books/NBK25500/" target="_blank">described in their documentation</a>. We will include this link in the <code>base_url</code> as a string in the <code>pubmed_search</code> function, along with the database of choice (pubmed) as a string.</p>
 
-        <pre class="prettyprint language-python"># in main.py
+
+        <div class="window-container">
+          <div class="window-top">
+              <span class="dot" style="background:#ED594A;"></span>
+              <span class="dot" style="background:#FDD800;"></span>
+              <span class="dot" style="background:#5AC05A;"></span>
+          </div>
+          <div class="window-content">
+            <pre class="prettyprint language-python"># in main.py
 import requests
 import json
 
@@ -243,6 +270,9 @@ def pubmed_search(s):
     base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
     database = "pubmed"
 </pre>
+          </div>
+        </div>
+
         <p>So how does the script find information in NCBI? From the NCBI's Entrez documentation, the following link can help navigate to the NCBI API page using an example search term: big data etl.</p>
         <p>
         <a id="p-link" href="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=big+data+etl" target="_blank">https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=big+data+etl</a></p>
@@ -251,7 +281,14 @@ def pubmed_search(s):
 
         <p>Let's create a variable called <code>query_url</code> to build that search link. </p>
 
-        <pre class="prettyprint language-python"># in main.py 
+        <div class="window-container">
+          <div class="window-top">
+              <span class="dot" style="background:#ED594A;"></span>
+              <span class="dot" style="background:#FDD800;"></span>
+              <span class="dot" style="background:#5AC05A;"></span>
+          </div>
+          <div class="window-content">
+            <pre class="prettyprint language-python"># in main.py 
 import requests
 import json
 
@@ -259,11 +296,21 @@ def pubmed_search(s):
     base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
     database = "pubmed"
     query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"</pre>
+          </div>
+        </div>
 
         <p>Notice the "retmode" at the end of query_url. We want the query to return the information in JSON instead of in XML format, which is almost like a Python dictionary, as shown in <a id="p-link" href="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=big+data+etl&retmode=json" target="_blank">https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=big+data+etl&retmode=json</a>.</p>
 
         <p>For Python to retrieve this information, we use the <code>requests.get()</code> method and call the string “response”. We need to build another search query for each article listed in the ID list (which is conveniently stored as a list) and just like in Python dictionaries, we can access this ID list by referring to the “key” into a new string called “idList”. This is why the JSON format is helpful – Python can parse data from JSON as if JSON is a dictionary!</p>
-        <pre class="prettyprint language-python"># in main.py 
+
+        <div class="window-container">
+          <div class="window-top">
+              <span class="dot" style="background:#ED594A;"></span>
+              <span class="dot" style="background:#FDD800;"></span>
+              <span class="dot" style="background:#5AC05A;"></span>
+          </div>
+          <div class="window-content">
+            <pre class="prettyprint language-python"># in main.py 
 import requests
 import json
 
@@ -273,8 +320,9 @@ def pubmed_search(s):
     query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
     response = requests.get(query_url)
     idList = response["esearchresult"]["idlist"]
-
-</pre>  
+</pre>
+          </div>
+        </div>
         
     <p>Let’s create an <code>if else</code> conditional when there are no numbers under idList using the <code>len()</code> function, we print a message. As for <code>else</code>, we create a for loop to iterate the first 5 articles (PubMed allows for a maximum of 20 articles).</p>
 
@@ -283,250 +331,295 @@ def pubmed_search(s):
     <p>Python indexing starts at 0 so we need to create a new variable called <code>article_count</code> that adds 1 to the index.
     </p>
 
-    <pre class="prettyprint language-python"># in main.py 
+    <div class="window-container">
+      <div class="window-top">
+          <span class="dot" style="background:#ED594A;"></span>
+          <span class="dot" style="background:#FDD800;"></span>
+          <span class="dot" style="background:#5AC05A;"></span>
+      </div>
+      <div class="window-content">
+        <pre class="prettyprint language-python"># in main.py 
 import requests
 import json
 
 def pubmed_search(s):
-    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
-    database = "pubmed"
-    query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
-    response = requests.get(query_url)
-    idList = response["esearchresult"]["idlist"]
+  base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+  database = "pubmed"
+  query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
+  response = requests.get(query_url)
+  idList = response["esearchresult"]["idlist"]
 
-    if len(idList) == "0":
-    print("No articles found! Please try another search term.")
+  if len(idList) == "0":
+      print("No articles found! Please try another search term.")
 
-    else: 
-        for article in idList[0:5]: 
-             total = len(idList[0:5])
-             i = idList.index(article)
-             article_count = int(i) + 1 </pre>  
+  else: 
+      for article in idList[0:5]: 
+           total = len(idList[0:5])
+           i = idList.index(article)
+           article_count = int(i) + 1 </pre>  
+      </div>
+    </div>
 
     <p>Let’s have Python print a message when it begins a search so create a conditional when the index starts at 0. To track the search of each article, we are going to print a message for the count number of each article out of the total.  
     </p>
-    <pre class="prettyprint language-python"># in main.py 
+
+    <div class="window-container">
+      <div class="window-top">
+          <span class="dot" style="background:#ED594A;"></span>
+          <span class="dot" style="background:#FDD800;"></span>
+          <span class="dot" style="background:#5AC05A;"></span>
+      </div>
+      <div class="window-content">
+        <pre class="prettyprint language-python"># in main.py 
 import requests
 import json
 
 def pubmed_search(s):
-    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
-    database = "pubmed"
-    query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
-    response = requests.get(query_url)
-    idList = response["esearchresult"]["idlist"]
+  base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+  database = "pubmed"
+  query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
+  response = requests.get(query_url)
+  idList = response["esearchresult"]["idlist"]
 
-    if len(idList) == "0":
-    print("No articles found! Please try another search term.")
+  if len(idList) == "0":
+      print("No articles found! Please try another search term.")
 
-    else: 
-        for article in idList[0:5]: 
-            total = len(idList[0:5])
-            i = idList.index(article)
-            article_count = int(i) + 1 
+  else: 
+      for article in idList[0:5]: 
+          total = len(idList[0:5])
+          i = idList.index(article)
+          article_count = int(i) + 1 
 
-            if i == "0": 
-                print("--------------")
-                print("Beginning article search") 
-                print("--------------")
+          if i == "0": 
+              print("--------------")
+              print("Beginning article search") 
+              print("--------------")
 
-            print(f"Retrieving articles {article_count} of {total}")</pre>  
+          print(f"Retrieving articles {article_count} of {total}")</pre>  
+      </div>
+    </div>
     
     <p>If we want to access the information for the first article of our example search, we use NCBI’s “esummary” and the ID 31201587: <a id="p-link" href="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=31201587&retmode=json" target="_blank">https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=31201587&retmode=json</a>. Once clicked, you can see a wealth of information of the article, including the article title, source, each author, and publication date. This is what we need to build our citation.</p>
 
     <p>Just as we did earlier, we need to create another base url link called <code>url</code>, and the variable <code>search_url</code> for each “article” listed in <code>idList</code> in this <code>for loop</code>. We also need to create a new variable called <code>search_response</code> (in JSON format) to store our requests from the response by <code>search_url</code>.</p>
 
-    <pre class="prettyprint language-python"># in main.py 
+    <div class="window-container">
+      <div class="window-top">
+          <span class="dot" style="background:#ED594A;"></span>
+          <span class="dot" style="background:#FDD800;"></span>
+          <span class="dot" style="background:#5AC05A;"></span>
+      </div>
+      <div class="window-content">
+        <pre class="prettyprint language-python"># in main.py 
 import requests
 import json
 
 def pubmed_search(s):
-    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
-    database = "pubmed"
-    query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
-    response = requests.get(query_url)
-    idList = response["esearchresult"]["idlist"]
+  base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+  database = "pubmed"
+  query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
+  response = requests.get(query_url)
+  idList = response["esearchresult"]["idlist"]
 
-    if len(idList) == "0":
-    print("No articles found! Please try another search term.")
+  if len(idList) == "0":
+      print("No articles found! Please try another search term.")
 
-    else: 
-        for article in idList[0:5]: 
-            total = len(idList[0:5])
-            i = idList.index(article)
-            article_count = int(i) + 1 
+  else: 
+      for article in idList[0:5]: 
+          total = len(idList[0:5])
+          i = idList.index(article)
+          article_count = int(i) + 1 
 
-            if i == "0": 
-                print("--------------")
-                print("Beginning article search") 
-                print("--------------")
+          if i == "0": 
+              print("--------------")
+              print("Beginning article search") 
+              print("--------------")
 
-            print(f"Retrieving articles {article_count} of {total}")
-            url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?" 
-            search_url = url + "db=" + database + "&id=" + article + "&retmode=json"
-            search_response = requests.get(search_url).json()</pre>  
+          print(f"Retrieving articles {article_count} of {total}")
+          url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?" 
+          search_url = url + "db=" + database + "&id=" + article + "&retmode=json"
+          search_response = requests.get(search_url).json()</pre>   
+      </div>
+    </div>
 
     <p>In our example article response for <a id="p-link" href="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=31201587&retmode=json" target="_blank">ID 31201587</a>, notice how there are multiple authors listed under “authors” and “name”. We need to create an empty list called <code>article_list</code> to store each “name” (we will iterate each name in a new for loop later).</p>
 
     <p>To keep the script running in case there is no information listed for the article, we will add a <code>try execpt</code> loop.</p>
             
-     <p>For creating citations of each article, we want to know the authors, title, journal, year, volume, issue, pages, and doi. Just like a Python dictionary, we can parse the data by accessing the values of each of these “keys” that we want and creating a new string for each.</p>
+    <p>For creating citations of each article, we want to know the authors, title, journal, year, volume, issue, pages, and doi. Just like a Python dictionary, we can parse the data by accessing the values of each of these “keys” that we want and creating a new string for each.</p>
+    
+    <p>Let’s have Python print a message when it begins a search so create a conditional when the index starts at 0. To track the search of each article, we are going to print a message for the count number of each article out of the total.  
+    </p>
 
-     <pre class="prettyprint language-python"># in main.py 
+    <div class="window-container">
+      <div class="window-top">
+          <span class="dot" style="background:#ED594A;"></span>
+          <span class="dot" style="background:#FDD800;"></span>
+          <span class="dot" style="background:#5AC05A;"></span>
+      </div>
+      <div class="window-content">
+        <pre class="prettyprint language-python"># in main.py 
 import requests
 import json
 
 def pubmed_search(s):
-    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
-    database = "pubmed"
-    query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
-    response = requests.get(query_url)
-    idList = response["esearchresult"]["idlist"]
+  base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+  database = "pubmed"
+  query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
+  response = requests.get(query_url)
+  idList = response["esearchresult"]["idlist"]
 
-    if len(idList) == "0":
-    print("No articles found! Please try another search term.")
+  if len(idList) == "0":
+      print("No articles found! Please try another search term.")
 
-    else: 
-        for article in idList[0:5]: 
-              total = len(idList[0:5])
-              i = idList.index(article)
-              article_count = int(i) + 1 </pre>  
-      
-          <p>Let’s have Python print a message when it begins a search so create a conditional when the index starts at 0. To track the search of each article, we are going to print a message for the count number of each article out of the total.  
-          </p>
-          <pre class="prettyprint language-python"># in main.py 
-import requests
-import json
+  else: 
+      for article in idList[0:5]: 
+          total = len(idList[0:5])
+          i = idList.index(article)
+          article_count = int(i) + 1 
 
-def pubmed_search(s):
-    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
-    database = "pubmed"
-    query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
-    response = requests.get(query_url)
-    idList = response["esearchresult"]["idlist"]
+          if i == "0": 
+              print("--------------")
+              print("Beginning article search") 
+              print("--------------")
 
-    if len(idList) == "0":
-    print("No articles found! Please try another search term.")
-
-    else: 
-    for article in idList[0:5]: 
-    total = len(idList[0:5])
-    i = idList.index(article)
-    article_count = int(i) + 1 
-
-    if i == "0": 
-        print("--------------")
-        print("Beginning article search") 
-        print("--------------")
-
-    print(f"Retrieving articles {article_count} of {total}")
-
-    url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?" 
-
-    search_url = url + "db=" + database + "&id=" + article + "&retmode=json" 
-      
-    search_response = requests.get(search_url).json()
-
-    article_list = []
-
-    try: 
-        pubmed_id = search_response["result"][article]["uid"]
-        title = search_response["result"][article]["title"]
-        authors = search_response["result"][article]["authors"] 
-        journal = search_response["result"][article]["source"]
-        pub_date = search_response["result"][article]["pubdate"]
-        volume = search_response["result"][article]["volume"]
-        issue = search_response["result"][article]["issue"]
-        pages = search_response["result"][article]["pages"]
-        doi = search_response["result"][article]["elocationid"]
-
-    except: 
-        print("No information found. Skipping...")</pre>  
-        <p>Because the string “author” contains multiple values, we append these values to our empty “authors_list” using a new for loop, and we use the <code>replace()</code> method to remove <code>‘, [, ]</code> characters when printing the results in terminal.</p>
-          
-        <p>Additionally, for the article title, we also need to replace <code>&l</code><code>t;</code><code>i&</code><code>gt;</code> (which denotes as italics in XML) to and (without the spacing), which lets the user know that the word is italicized.</p>
+          print(f"Retrieving articles {article_count} of {total}")
+          url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?" 
+          search_url = url + "db=" + database + "&id=" + article + "&retmode=json"
+          search_response = requests.get(search_url).json()
         
-        <p>Finally, we can print out our results in terminal by showing the PubMed ID and place the strings in citation format. Note that we use indexing to just print the year. We are almost done!</p>
+          article_list = []
 
-        <pre class="prettyprint language-python"># in main.py
-for article in idList: 
-total = len(idList[0:5]) 
-i = idList.index(article) 
-article_count = int(i) + 1
+          try: 
+              pubmed_id = search_response["result"][article]["uid"]
+              title = search_response["result"][article]["title"]
+              authors = search_response["result"][article]["authors"] 
+              journal = search_response["result"][article]["source"]
+              pub_date = search_response["result"][article]["pubdate"]
+              volume = search_response["result"][article]["volume"]
+              issue = search_response["result"][article]["issue"]
+              pages = search_response["result"][article]["pages"]
+              doi = search_response["result"][article]["elocationid"]
+      
+          except: 
+              print("No information found. Skipping...")</pre>    
+      </div>
+    </div>
+      
+    <p>Because the string “author” contains multiple values, we append these values to our empty “authors_list” using a new for loop, and we use the <code>replace()</code> method to remove <code>‘, [, ]</code> characters when printing the results in terminal.</p>
+      
+    <p>Additionally, for the article title, we also need to replace <code>&l</code><code>t;</code><code>i&</code><code>gt;</code> (which denotes as italics in XML) to and (without the spacing), which lets the user know that the word is italicized.</p>
+    
+    <p>Finally, we can print out our results in terminal by showing the PubMed ID and place the strings in citation format. Note that we use indexing to just print the year. We are almost done!</p>
 
-if i == "0": 
-        print("--------------") 
-        print("Beginning article search") 
-        print("--------------")
 
-print(f"Retrieving articles {article_count} of {total}")
-
-url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?" 
-
-search_url = url + "db=" + database + "&id=" + article + "&retmode=json" 
-
-search_response = requests.get(search_url).json() 
-
-article_list = []
-
-try: 
-    pubmed_id = search_response["result"][article]["uid"] 
-    title = search_response["result"][article]["title"] 
-    authors = search_response["result"][article]["authors"] 
-    journal = search_response["result"][article]["source"] 
-    pub_date = search_response["result"][article]["pubdate"] 
-    volume = search_response["result"][article]["volume"] 
-    issue = search_response["result"][article]["issue"] 
-    pages = search_response["result"][article]["pages"] 
-    doi = search_response["result"][article]["elocationid"] 
-
-    for i in authors: 
-              all_authors = i["name"]
-              author_list.append(all_authors)
-
-    names = str(author_list).replace("'", "").replace("[","").replace("]","")
-
-    # please see this line on Github, code is not displaying properly
-    corrected_title = title.replace("&lt;i&gt;", "<i>").replace("&lt;/i&gt;", "</i>")
-
-    print(f"PubMed ID: {pubmed_id}")
-
-    print(f"{names}.{corrected_title} {journal} {pub_date[0:4]};{volume}({issue}):{pages}. {doi}")
-    print("-----------------") 
-
-except: 
-    print("No information found. Skipping..") 
-        </pre>
-        </p>
-        <p>We are done with writing our function so outside of the function, we create a string called “term” to take in user’s input for the search terms and call the function. Each spacing in the term must be replaced by a “+” sign so we use the <code>replace()</code> function again.</p>
-
-        <pre class="prettyprint language-python"># in main.py
+    <div class="window-container">
+      <div class="window-top">
+          <span class="dot" style="background:#ED594A;"></span>
+          <span class="dot" style="background:#FDD800;"></span>
+          <span class="dot" style="background:#5AC05A;"></span>
+      </div>
+      <div class="window-content">
+        <pre class="prettyprint language-python"># in main.py 
 import requests
 import json
 
 def pubmed_search(s):
-#### CODE BLOCK ######
+  base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+  database = "pubmed"
+  query_url = base_url + "esearch.fcgi?db=" + database + "&term=" + s + "&retmode=json"
+  response = requests.get(query_url)
+  idList = response["esearchresult"]["idlist"]
+
+  if len(idList) == "0":
+      print("No articles found! Please try another search term.")
+
+  else: 
+      for article in idList[0:5]: 
+          total = len(idList[0:5])
+          i = idList.index(article)
+          article_count = int(i) + 1 
+
+          if i == "0": 
+              print("--------------")
+              print("Beginning article search") 
+              print("--------------")
+
+          print(f"Retrieving articles {article_count} of {total}")
+          url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?" 
+          search_url = url + "db=" + database + "&id=" + article + "&retmode=json"
+          search_response = requests.get(search_url).json()
+        
+          article_list = []
+
+          try: 
+              pubmed_id = search_response["result"][article]["uid"]
+              title = search_response["result"][article]["title"]
+              authors = search_response["result"][article]["authors"] 
+              journal = search_response["result"][article]["source"]
+              pub_date = search_response["result"][article]["pubdate"]
+              volume = search_response["result"][article]["volume"]
+              issue = search_response["result"][article]["issue"]
+              pages = search_response["result"][article]["pages"]
+              doi = search_response["result"][article]["elocationid"]
+
+              for i in authors: 
+                  all_authors = i["name"]
+                  author_list.append(all_authors)
+
+              names = str(author_list).replace("'", "").replace("[","").replace("]","")
+
+              # please see this line on Github, code is not displaying properly
+              corrected_title = title.replace("&lt;i&gt;", "<i>").replace("&lt;/i&gt;", "</i>")
+
+              print(f"PubMed ID: {pubmed_id}")
+
+              print(f"{names}.{corrected_title} {journal} {pub_date[0:4]};{volume}({issue}):{pages}. {doi}")
+              print("-----------------") 
+
+          except: 
+              print("No information found. Skipping...")</pre>    
+      </div>
+    </div>
+
+    <p>We are done with writing our function so outside of the function, we create a string called “term” to take in user’s input for the search terms and call the function. Each spacing in the term must be replaced by a “+” sign so we use the <code>replace()</code> function again.</p>
+
+    <div class="window-container">
+      <div class="window-top">
+          <span class="dot" style="background:#ED594A;"></span>
+          <span class="dot" style="background:#FDD800;"></span>
+          <span class="dot" style="background:#5AC05A;"></span>
+      </div>
+      <div class="window-content">
+        <pre class="prettyprint language-python"># in main.py 
+import requests
+import json
+
+def pubmed_search(s):
+  ### CODE BLOCK ### 
 
 term = input("Please enter a search for PubMed articles :").replace(" ", "+")
 
 pubmed_search(term)</pre>
-        <p>Congrats, the script is done! You can refer to the code <a id="p-link" href="https://github.com/ying-li-python/citation-generator/blob/master/main.py" target="_blank">here</a>.</p>
-        <br>
-          <hr>
-          <!-- <a href="#">
-            <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
-          </a>
-          <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span> -->
-      
-          <p>
-          <div class="clearfix">
-              <a class="btn btn-primary float-left" href="../index.html">Back to Blog</a>
-              
-        </div>
-          </p>
-        </div>        
       </div>
     </div>
+
+    <p>Congrats, the script is done! You can refer to the code <a id="p-link" href="https://github.com/ying-li-python/citation-generator/blob/master/main.py" target="_blank">here</a>.</p>
+    <br>
+    <hr>
+    <!-- <a href="#">
+      <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
+    </a>
+    <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span> -->
+
+    <p>
+      <div class="clearfix">
+        <a class="btn btn-primary float-left" href="../index.html">Back to Blog</a>  
+      </div>
+    </p>
+  </div>        
+</div>
+</div>
   
   </article>
   
